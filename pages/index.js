@@ -1,17 +1,6 @@
 import Head from 'next/head';
 import Puzzle from '../components/Puzzle';
-
-const test = [
-  [0, 0, 0, 0, 4, 0, 9, 5, 0],
-  [0, 8, 0, 0, 9, 0, 0, 0, 7],
-  [0, 6, 0, 5, 0, 0, 0, 2, 3],
-  [0, 4, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 6, 7, 4, 0, 0, 0],
-  [0, 0, 3, 0, 0, 0, 0, 8, 0],
-  [4, 3, 0, 0, 0, 1, 0, 7, 0],
-  [8, 0, 0, 0, 3, 0, 0, 4, 0],
-  [0, 2, 7, 0, 8, 0, 0, 0, 0],
-];
+import { mock } from '../utils';
 
 export default function Home() {
   return (
@@ -22,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Puzzle puzzle={test} />
+        <Puzzle puzzle={mock} />
       </main>
     </div>
   );
