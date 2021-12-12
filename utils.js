@@ -1,5 +1,6 @@
-export function verifyCell(puzzle, x, y) {
-  const value = puzzle[y][x];
+const possibleNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+function verifyCell(puzzle, x, y, value) {
   // unique in row
   for (let dx = 0; dx < 9; dx++) {
     if (dx !== x && puzzle[y][dx] === value) return false;
@@ -21,8 +22,43 @@ export function verifyCell(puzzle, x, y) {
   return true;
 }
 
+function findSolutions(puzzle, x, y) {
+  return possibleNumbers.filter((n) => verifyCell(puzzle, x, y, n));
+}
+
+export function step(puzzle, x = 0, y = 0) {
+  // backtracking is using the choose -> explore -> unchoose
+
+  // find obvious unique solution for cell
+  let solutions = findSolutions(puzzle, x, y);
+
+  return solutions.length === 1 ? solutions[0] : null;
+}
+
+function getNextPosition(position) {
+  if (position.x === 8 && position.y === 8) return { x: 0, y: 0 };
+  let x = position.x + 1;
+  let y = position.y;
+  if (x >= 9) {
+    x = 0;
+    y++;
+  }
+  return { x, y };
+}
+
+export function getNextEmptyPosition(puzzle, position) {
+  let check = 100;
+  let pos = getNextPosition(position);
+  while (check--) {
+    if (puzzle[pos.y][pos.x] === 0) return pos;
+    pos = getNextPosition(pos);
+  }
+  return pos;
+}
+
 export function solve(puzzle) {
-  return [];
+  // backtracking is using the choose -> explore -> unchoose
+  return step(puzzle, [], 0);
 }
 
 export function generate() {

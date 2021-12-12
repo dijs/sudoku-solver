@@ -1,8 +1,25 @@
 import Head from 'next/head';
+import { useState } from 'react';
 import Puzzle from '../components/Puzzle';
-import { mock } from '../utils';
+import { getNextEmptyPosition, mock, solve, step } from '../utils';
 
 export default function Home() {
+  const [puzzle, setPuzzle] = useState(mock);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  function doStep() {
+    const solution = step(puzzle, position.x, position.y);
+
+    if (solution) {
+      console.log({ solution });
+      const temp = JSON.parse(JSON.stringify(puzzle));
+      temp[position.y][position.x] = solution;
+      setPuzzle(temp);
+    }
+
+    setPosition(getNextEmptyPosition(puzzle, position));
+  }
+
   return (
     <div>
       <Head>
@@ -11,7 +28,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Puzzle puzzle={mock} />
+        <Puzzle puzzle={puzzle} highlight={position} />
+        <div className="actions">
+          <button onClick={doStep}>STEP</button>
+          <button onClick={() => setPuzzle(solve(puzzle))}>SOLVE</button>
+        </div>
       </main>
     </div>
   );

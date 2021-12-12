@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap');
+
 html,
 body {
   background-color: #ff5677;
   padding: 8px;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Bakbak One', cursive;
 }
 
 a {
@@ -21,6 +22,7 @@ main {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  flex-direction: column;
 }
 
 .block td {
@@ -31,4 +33,29 @@ main {
   height: 48px;
   vertical-align: middle;
   text-align: center;
+  border-radius: 4px;
+}
+
+button {
+  margin-top: 24px;
+  border: none;
+  background-color: #9145b6;
+  color: white;
+  font-size: 24px;
+  padding: 8px;
+  border-radius: 6px;
+  transition: transform 0.3s;
+  font-family: 'Bakbak One', cursive;
+}
+
+button:active {
+  transform: scale(1.05);
+}
+
+button:first-of-type {
+  margin-right: 8px;
+}
+
+td.highlight {
+  background-color: #4c3f91ad;
 }
