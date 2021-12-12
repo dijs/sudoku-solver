@@ -17,7 +17,6 @@ export default function Home() {
     const solution = doubleStep(puzzle);
 
     if (solution) {
-      console.log('Solved', solution);
       const temp = JSON.parse(JSON.stringify(puzzle));
       const { x, y, value } = solution;
       temp[y][x] = value;
@@ -29,7 +28,6 @@ export default function Home() {
   function doStep() {
     const solution = singleStep(puzzle, position.x, position.y);
     if (solution) {
-      console.log('Solved', solution);
       const temp = JSON.parse(JSON.stringify(puzzle));
       temp[position.y][position.x] = solution;
       setPuzzle(temp);

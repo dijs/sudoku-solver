@@ -66,6 +66,31 @@ function findDoubles(puzzle) {
     }
   }
 
+  // check blocks
+  for (let by = 0; by < 3; by++) {
+    for (let bx = 0; bx < 3; bx++) {
+      //
+      let pairs = {};
+
+      for (let dx = 0; dx < 3; dx++) {
+        for (let dy = 0; dy < 3; dy++) {
+          const x = bx * 3 + dx;
+          const y = by * 3 + dy;
+
+          const candidates = findCandidates(puzzle, x, y);
+          if (candidates.length === 2) {
+            const key = candidates.join('.');
+            if (pairs[key] === 1) {
+              doubles.push({ block: [bx, by], pair: candidates });
+            } else {
+              pairs[key] = 1;
+            }
+          }
+        }
+      }
+    }
+  }
+
   return doubles;
 }
 
@@ -90,6 +115,25 @@ function solveDouble(puzzle, double) {
       );
       if (candidates.length === 1) {
         return { x: double.x, y, value: candidates[0], vertical: true };
+      }
+    }
+  }
+
+  if (double.block !== undefined) {
+    const [bx, by] = double.block;
+
+    for (let dy = 0; dy < 3; dy++) {
+      for (let dx = 0; dx < 3; dx++) {
+        const x = bx * 3 + dx;
+        const y = by * 3 + dy;
+        if (puzzle[y][x] === 0) {
+          const candidates = findCandidates(puzzle, x, y).filter(
+            (n) => !double.pair.includes(n)
+          );
+          if (candidates.length === 1) {
+            return { x, y, value: candidates[0], block: true };
+          }
+        }
       }
     }
   }
@@ -132,6 +176,8 @@ export function getNextEmptyPosition(puzzle, position) {
   }
   return pos;
 }
+
+function isCompleted(puzzle) {}
 
 export function solve(puzzle) {
   // backtracking is using the choose -> explore -> unchoose
