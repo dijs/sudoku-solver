@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import Puzzle from '../components/Puzzle';
-import { getNextEmptyPosition, mock, solve, step } from '../utils';
+import { getNextEmptyPosition, easy, solve, step } from '../utils';
 
 export default function Home() {
-  const [puzzle, setPuzzle] = useState(mock);
+  const [puzzle, setPuzzle] = useState(easy);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   function doStep() {
