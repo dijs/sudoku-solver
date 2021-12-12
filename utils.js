@@ -50,18 +50,46 @@ function findDoubles(puzzle) {
     }
   }
 
+  // check columns
+  for (let x = 0; x < 9; x++) {
+    let pairs = {};
+    for (let y = 0; y < 9; y++) {
+      const candidates = findCandidates(puzzle, x, y);
+      if (candidates.length === 2) {
+        const key = candidates.join('.');
+        if (pairs[key] === 1) {
+          doubles.push({ x, pair: candidates });
+        } else {
+          pairs[key] = 1;
+        }
+      }
+    }
+  }
+
   return doubles;
 }
 
 function solveDouble(puzzle, double) {
-  if (double.y) {
+  if (double.y !== undefined) {
     for (let x = 0; x < 9; x++) {
       if (puzzle[double.y][x] !== 0) continue;
       const candidates = findCandidates(puzzle, x, double.y).filter(
         (n) => !double.pair.includes(n)
       );
       if (candidates.length === 1) {
-        return { x, y: double.y, value: candidates[0] };
+        return { x, y: double.y, value: candidates[0], horizontal: true };
+      }
+    }
+  }
+
+  if (double.x !== undefined) {
+    for (let y = 0; y < 9; y++) {
+      if (puzzle[y][double.x] !== 0) continue;
+      const candidates = findCandidates(puzzle, double.x, y).filter(
+        (n) => !double.pair.includes(n)
+      );
+      if (candidates.length === 1) {
+        return { x: double.x, y, value: candidates[0], vertical: true };
       }
     }
   }
