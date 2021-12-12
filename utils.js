@@ -177,11 +177,48 @@ export function getNextEmptyPosition(puzzle, position) {
   return pos;
 }
 
-function isCompleted(puzzle) {}
+function isCompleted(puzzle) {
+  for (let y = 0; y < 9; y++) {
+    for (let x = 0; x < 9; x++) {
+      if (puzzle[y][x] === 0) return false;
+    }
+  }
+  return true;
+}
 
 export function solve(puzzle) {
-  // backtracking is using the choose -> explore -> unchoose
-  return step(puzzle, [], 0);
+  let current = [...puzzle];
+
+  let steps = 0;
+  let pos = { x: 0, y: 0 };
+
+  while (steps < 1000) {
+    const single = findSingleCandidate(current, pos.x, pos.y);
+    if (single) {
+      console.log('solved single', single);
+      current[pos.y][pos.x] = single;
+    }
+    pos = getNextEmptyPosition(current, pos);
+
+    const doubles = findDoubles(current);
+
+    for (let double of doubles) {
+      const solution = solveDouble(current, double);
+      if (solution) {
+        console.log('solved double', solution.value);
+        current[solution.y][solution.x] = solution.value;
+      }
+    }
+
+    if (isCompleted(current)) {
+      console.log('completed in', steps, 'steps');
+      return current;
+    }
+
+    steps++;
+  }
+
+  return current;
 }
 
 export function generate() {
