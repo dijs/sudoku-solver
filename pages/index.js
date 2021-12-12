@@ -1,15 +1,19 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import Puzzle from '../components/Puzzle';
-import { getNextEmptyPosition, easy, solve, step, doubleStep } from '../utils';
+import {
+  getNextEmptyPosition,
+  easy,
+  solve,
+  singleStep,
+  doubleStep,
+} from '../utils';
 
 export default function Home() {
   const [puzzle, setPuzzle] = useState(easy);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  function doStep() {
-    // const solution = step(puzzle, position.x, position.y);
-
+  function doDoubleStep() {
     const solution = doubleStep(puzzle);
 
     if (solution) {
@@ -20,15 +24,17 @@ export default function Home() {
       setPuzzle(temp);
       setPosition({ x, y });
     }
+  }
 
-    // if (solution) {
-    //   console.log({ solution });
-    //   const temp = JSON.parse(JSON.stringify(puzzle));
-    //   temp[position.y][position.x] = solution;
-    //   setPuzzle(temp);
-    // }
-
-    // setPosition(getNextEmptyPosition(puzzle, position));
+  function doStep() {
+    const solution = singleStep(puzzle, position.x, position.y);
+    if (solution) {
+      console.log('Solved', solution);
+      const temp = JSON.parse(JSON.stringify(puzzle));
+      temp[position.y][position.x] = solution;
+      setPuzzle(temp);
+    }
+    setPosition(getNextEmptyPosition(puzzle, position));
   }
 
   return (
@@ -42,6 +48,7 @@ export default function Home() {
         <Puzzle puzzle={puzzle} highlight={position} />
         <div className="actions">
           <button onClick={doStep}>STEP</button>
+          <button onClick={doDoubleStep}>DOUBLE STEP</button>
           <button onClick={() => setPuzzle(solve(puzzle))}>SOLVE</button>
         </div>
       </main>

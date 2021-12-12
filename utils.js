@@ -33,11 +33,10 @@ function findSingleCandidate(puzzle, x, y) {
 
 function findDoubles(puzzle) {
   const doubles = [];
-  let pairs;
 
   // check rows
   for (let y = 0; y < 9; y++) {
-    pairs = {};
+    let pairs = {};
     for (let x = 0; x < 9; x++) {
       const candidates = findCandidates(puzzle, x, y);
       if (candidates.length === 2) {
@@ -75,15 +74,13 @@ export function doubleStep(puzzle) {
 
   for (let double of doubles) {
     const solution = solveDouble(puzzle, double);
-    if (solution) {
-      return solution;
-    }
+    if (solution) return solution;
   }
 
   return null;
 }
 
-export function step(puzzle, x = 0, y = 0) {
+export function singleStep(puzzle, x = 0, y = 0) {
   return findSingleCandidate(puzzle, x, y);
 }
 
