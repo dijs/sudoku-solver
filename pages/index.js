@@ -3,14 +3,15 @@ import { useState } from 'react';
 import Puzzle from '../components/Puzzle';
 import {
   getNextEmptyPosition,
-  easy,
+  easy2,
+  hard,
   solve,
   singleStep,
   doubleStep,
 } from '../utils';
 
 export default function Home() {
-  const [puzzle, setPuzzle] = useState(easy);
+  const [puzzle, setPuzzle] = useState(hard);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   function doDoubleStep() {

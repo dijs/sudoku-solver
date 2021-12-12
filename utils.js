@@ -192,7 +192,7 @@ export function solve(puzzle) {
   let steps = 0;
   let pos = { x: 0, y: 0 };
 
-  while (steps < 1000) {
+  while (steps < 512) {
     const single = findSingleCandidate(current, pos.x, pos.y);
     if (single) {
       console.log('solved single', single);
@@ -217,6 +217,8 @@ export function solve(puzzle) {
 
     steps++;
   }
+
+  console.log('need more juice...');
 
   return current;
 }
@@ -247,4 +249,16 @@ export const easy = [
   [0, 0, 0, 0, 5, 0, 0, 9, 0],
   [8, 5, 0, 3, 6, 0, 0, 0, 0],
   [2, 0, 4, 1, 0, 0, 0, 0, 3],
+];
+
+export const easy2 = [
+  [0, 2, 0, 0, 0, 0, 0, 0, 6],
+  [5, 0, 0, 3, 1, 0, 0, 8, 0],
+  [0, 0, 0, 0, 9, 6, 0, 5, 4],
+  [0, 8, 2, 6, 4, 0, 0, 0, 0],
+  [6, 0, 3, 0, 0, 0, 0, 0, 8],
+  [0, 0, 0, 0, 0, 3, 0, 1, 0],
+  [2, 1, 5, 0, 6, 8, 3, 0, 7],
+  [0, 4, 0, 0, 0, 0, 9, 0, 1],
+  [9, 0, 6, 1, 7, 4, 8, 0, 5],
 ];
