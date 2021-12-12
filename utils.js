@@ -31,9 +31,59 @@ function findSingleCandidate(puzzle, x, y) {
   return candidates.length === 1 ? candidates[0] : null;
 }
 
-export function step(puzzle, x = 0, y = 0) {
-  // backtracking is using the choose -> explore -> unchoose
+function findDoubles(puzzle) {
+  const doubles = [];
+  let pairs;
 
+  // check rows
+  for (let y = 0; y < 9; y++) {
+    pairs = {};
+    for (let x = 0; x < 9; x++) {
+      const candidates = findCandidates(puzzle, x, y);
+      if (candidates.length === 2) {
+        const key = candidates.join('.');
+        if (pairs[key] === 1) {
+          doubles.push({ y, pair: candidates });
+        } else {
+          pairs[key] = 1;
+        }
+      }
+    }
+  }
+
+  return doubles;
+}
+
+function solveDouble(puzzle, double) {
+  if (double.y) {
+    for (let x = 0; x < 9; x++) {
+      if (puzzle[double.y][x] !== 0) continue;
+      const candidates = findCandidates(puzzle, x, double.y).filter(
+        (n) => !double.pair.includes(n)
+      );
+      if (candidates.length === 1) {
+        return { x, y: double.y, value: candidates[0] };
+      }
+    }
+  }
+
+  return null;
+}
+
+export function doubleStep(puzzle) {
+  const doubles = findDoubles(puzzle);
+
+  for (let double of doubles) {
+    const solution = solveDouble(puzzle, double);
+    if (solution) {
+      return solution;
+    }
+  }
+
+  return null;
+}
+
+export function step(puzzle, x = 0, y = 0) {
   return findSingleCandidate(puzzle, x, y);
 }
 

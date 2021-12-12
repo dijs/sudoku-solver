@@ -1,23 +1,34 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import Puzzle from '../components/Puzzle';
-import { getNextEmptyPosition, easy, solve, step } from '../utils';
+import { getNextEmptyPosition, easy, solve, step, doubleStep } from '../utils';
 
 export default function Home() {
   const [puzzle, setPuzzle] = useState(easy);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   function doStep() {
-    const solution = step(puzzle, position.x, position.y);
+    // const solution = step(puzzle, position.x, position.y);
+
+    const solution = doubleStep(puzzle);
 
     if (solution) {
-      console.log({ solution });
+      console.log('Solved', solution);
       const temp = JSON.parse(JSON.stringify(puzzle));
-      temp[position.y][position.x] = solution;
+      const { x, y, value } = solution;
+      temp[y][x] = value;
       setPuzzle(temp);
+      setPosition({ x, y });
     }
 
-    setPosition(getNextEmptyPosition(puzzle, position));
+    // if (solution) {
+    //   console.log({ solution });
+    //   const temp = JSON.parse(JSON.stringify(puzzle));
+    //   temp[position.y][position.x] = solution;
+    //   setPuzzle(temp);
+    // }
+
+    // setPosition(getNextEmptyPosition(puzzle, position));
   }
 
   return (
