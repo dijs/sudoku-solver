@@ -59,3 +59,8 @@ button:first-of-type {
 td.highlight {
   background-color: #4c3f91ad;
 }
+
+.candidates {
+  font-size: 12px;
+  color: #ccc;
+}

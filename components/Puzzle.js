@@ -1,3 +1,5 @@
+import { findCandidates } from '../utils';
+
 function Block({ puzzle, highlight, x = 0, y = 0 }) {
   const cell = (dx, dy) => {
     const _x = x * 3 + dx;
@@ -6,7 +8,11 @@ function Block({ puzzle, highlight, x = 0, y = 0 }) {
       <td
         className={highlight.x === _x && highlight.y === _y ? 'highlight' : ''}
       >
-        {puzzle[_y][_x] || ''}
+        {puzzle[_y][_x] || (
+          <div className="candidates">
+            {findCandidates(puzzle, _x, _y).join(',')}
+          </div>
+        )}
       </td>
     );
   };

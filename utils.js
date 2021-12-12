@@ -22,17 +22,19 @@ function verifyCell(puzzle, x, y, value) {
   return true;
 }
 
-function findSolutions(puzzle, x, y) {
+export function findCandidates(puzzle, x, y) {
   return possibleNumbers.filter((n) => verifyCell(puzzle, x, y, n));
+}
+
+function findSingleCandidate(puzzle, x, y) {
+  const candidates = findCandidates(puzzle, x, y);
+  return candidates.length === 1 ? candidates[0] : null;
 }
 
 export function step(puzzle, x = 0, y = 0) {
   // backtracking is using the choose -> explore -> unchoose
 
-  // find obvious unique solution for cell
-  let solutions = findSolutions(puzzle, x, y);
-
-  return solutions.length === 1 ? solutions[0] : null;
+  return findSingleCandidate(puzzle, x, y);
 }
 
 function getNextPosition(position) {
