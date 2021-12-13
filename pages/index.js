@@ -8,11 +8,16 @@ import {
   solve,
   singleStep,
   doubleStep,
+  findTriples,
 } from '../utils';
 
 export default function Home() {
-  const [puzzle, setPuzzle] = useState(hard);
+  const [puzzle, setPuzzle] = useState(easy2);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  function doTripleStep() {
+    console.log(findTriples(puzzle));
+  }
 
   function doDoubleStep() {
     const solution = doubleStep(puzzle);
@@ -48,6 +53,7 @@ export default function Home() {
         <div className="actions">
           <button onClick={doStep}>STEP</button>
           <button onClick={doDoubleStep}>DOUBLE STEP</button>
+          <button onClick={doTripleStep}>TRIPLE STEP</button>
           <button onClick={() => setPuzzle(solve(puzzle))}>SOLVE</button>
         </div>
       </main>

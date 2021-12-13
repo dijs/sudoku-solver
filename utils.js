@@ -31,6 +31,53 @@ function findSingleCandidate(puzzle, x, y) {
   return candidates.length === 1 ? candidates[0] : null;
 }
 
+export function findTriples(puzzle) {
+  const triples = [];
+
+  // check rows
+  for (let y = 0; y < 9; y++) {
+    let triplets = {};
+    let counts = {};
+
+    for (let x = 0; x < 9; x++) {
+      const candidates = findCandidates(puzzle, x, y);
+      if (candidates.length === 2 || candidates.length === 3) {
+        let key = Array(9).fill(0);
+        for (let n of candidates) {
+          key[n] = 1;
+        }
+
+        const k = parseInt(key.join(''), 2);
+
+        counts[k] = (counts[k] || 0) + 1;
+
+        for (let u in counts) {
+          const m = Math.min(u, k);
+          const n = Math.max(u, k);
+          if ((m & n) === m) {
+            if (triplets[m]) {
+              if (triplets[m].length < candidates.length) {
+                triplets[m] = candidates;
+              }
+            } else {
+              triplets[m] = candidates;
+            }
+            counts[m] = (counts[m] || 0) + 1;
+          }
+        }
+      }
+    }
+
+    for (let u in counts) {
+      if (counts[u] / 2 === 3) {
+        triples.push({ y, triplet: triplets[u] });
+      }
+    }
+  }
+
+  return triples;
+}
+
 function findDoubles(puzzle) {
   const doubles = [];
 
