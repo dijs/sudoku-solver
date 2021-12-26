@@ -1,6 +1,6 @@
 import { findCandidates } from '../utils';
 
-function Block({ puzzle, highlight, x = 0, y = 0 }) {
+function Block({ puzzle, highlight, x = 0, y = 0, showHints }) {
   const cell = (dx, dy) => {
     const _x = x * 3 + dx;
     const _y = y * 3 + dy;
@@ -8,11 +8,12 @@ function Block({ puzzle, highlight, x = 0, y = 0 }) {
       <td
         className={highlight.x === _x && highlight.y === _y ? 'highlight' : ''}
       >
-        {puzzle[_y][_x] || (
-          <div className="candidates">
-            {findCandidates(puzzle, _x, _y).join(',')}
-          </div>
-        )}
+        {puzzle[_y][_x] ||
+          (showHints && (
+            <div className="candidates">
+              {findCandidates(puzzle, _x, _y).join(',')}
+            </div>
+          ))}
       </td>
     );
   };
@@ -39,41 +40,95 @@ function Block({ puzzle, highlight, x = 0, y = 0 }) {
   );
 }
 
-export default function Puzzle({ puzzle = [], highlight }) {
+export default function Puzzle({ puzzle = [], highlight, showHints }) {
   return (
     <table className="grid">
       <tbody>
         <tr>
           <td>
-            <Block puzzle={puzzle} highlight={highlight} x={0} y={0} />
+            <Block
+              puzzle={puzzle}
+              highlight={highlight}
+              showHints={showHints}
+              x={0}
+              y={0}
+            />
           </td>
           <td>
-            <Block puzzle={puzzle} highlight={highlight} x={1} y={0} />
+            <Block
+              puzzle={puzzle}
+              highlight={highlight}
+              showHints={showHints}
+              x={1}
+              y={0}
+            />
           </td>
           <td>
-            <Block puzzle={puzzle} highlight={highlight} x={2} y={0} />
+            <Block
+              puzzle={puzzle}
+              highlight={highlight}
+              showHints={showHints}
+              x={2}
+              y={0}
+            />
           </td>
         </tr>
         <tr>
           <td>
-            <Block puzzle={puzzle} highlight={highlight} x={0} y={1} />
+            <Block
+              puzzle={puzzle}
+              highlight={highlight}
+              showHints={showHints}
+              x={0}
+              y={1}
+            />
           </td>
           <td>
-            <Block puzzle={puzzle} highlight={highlight} x={1} y={1} />
+            <Block
+              puzzle={puzzle}
+              highlight={highlight}
+              showHints={showHints}
+              x={1}
+              y={1}
+            />
           </td>
           <td>
-            <Block puzzle={puzzle} highlight={highlight} x={2} y={1} />
+            <Block
+              puzzle={puzzle}
+              highlight={highlight}
+              showHints={showHints}
+              x={2}
+              y={1}
+            />
           </td>
         </tr>
         <tr>
           <td>
-            <Block puzzle={puzzle} highlight={highlight} x={0} y={2} />
+            <Block
+              puzzle={puzzle}
+              highlight={highlight}
+              showHints={showHints}
+              x={0}
+              y={2}
+            />
           </td>
           <td>
-            <Block puzzle={puzzle} highlight={highlight} x={1} y={2} />
+            <Block
+              puzzle={puzzle}
+              highlight={highlight}
+              showHints={showHints}
+              x={1}
+              y={2}
+            />
           </td>
           <td>
-            <Block puzzle={puzzle} highlight={highlight} x={2} y={2} />
+            <Block
+              puzzle={puzzle}
+              highlight={highlight}
+              showHints={showHints}
+              x={2}
+              y={2}
+            />
           </td>
         </tr>
       </tbody>
